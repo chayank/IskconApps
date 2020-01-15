@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <!-- jQuery -->
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+
+  <!-- XDSoft DateTimePicker -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css" integrity="sha256-DOS9W6NR+NFe1fUhEE0PGKY/fubbUCnOfTje2JMDw3Y=" crossorigin="anonymous" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js" integrity="sha256-FEqEelWI3WouFOo2VWP/uJfs1y8KJ++FLh2Lbqc8SJk=" crossorigin="anonymous"></script>
+
+
+    <title>Section-4</title>
+  </head>
+  <body>
+     <div class="container">
+            <div class="form-group">
+                <label class="font-weight-bold" for="counsellor_name">Caregiver/Counsellor Name</label>
+                <input type="text" class="form-control" id="counsellor_name" placeholder="Ex: HG Prema Padmini Mathaji ">
+            </div>
+
+            <div class="form-group">
+                <label class="font-weight-bold">Are You Part Of Any Bhakti Vriksha ?  </label>
+                <div class="form-check form-check">
+                    <input class="form-check-input" type="radio" name="gender_radio_options" id="male" value="m">
+                    <label class="form-check-label font-weight-bold" for="male">Yes</label>
+                </div>
+                <div class="form-check form-check">
+                    <input class="form-check-input" type="radio" name="gender_radio_options" id="male" value="f">
+                    <label class="form-check-label font-weight-bold" for="female">No</label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="font-weight-bold" for="part_of_bv">Bhakti Vriksha/ Sector/Circle Name </label>
+                <input type="text" class="form-control" id="part_of_bv" placeholder="Ex: HG Prema Padmini Mathaji's BV ">
+            </div>
+
+            <div class="form-group">
+                <label class="font-weight-bold">I Have Responsibility In Bhakti Vriksha</label></br>
+                <div class="form-check form-check">
+                    <input class="form-check-input" type="radio" name="gender_radio_options" id="male" value="m">
+                    <label class="form-check-label font-weight-bold" for="male">Intern Leader</label>
+                </div>
+                <div class="form-check form-check">
+                    <input class="form-check-input" type="radio" name="gender_radio_options" id="male" value="f">
+                    <label class="form-check-label font-weight-bold" for="female">Bv Servant Leader</label>
+                </div>
+                <div class="form-check form-check">
+                    <input class="form-check-input" type="radio" name="gender_radio_options" id="male" value="f">
+                    <label class="form-check-label font-weight-bold" for="female">Sector Leader</label>
+                </div>
+                <div class="form-check form-check">
+                    <input class="form-check-input" type="radio" name="gender_radio_options" id="male" value="f">
+                    <label class="form-check-label font-weight-bold" for="female">Circle Leader</label>
+                </div>
+            </div>
+        <div class="table-responsive">
+            <label class="font-weight-bold">I Am Part Of Others</label>
+            <table class="table table-hover text-center table-bordered">
+                <thead class="thead-light">
+                    <tr>
+                    <th scope="col">Program Name</th>
+                    <th scope="col">Attending</th>
+                    <th scope="col">Teaching</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="form-group">
+                    <th scope="row">Children's Program</th>
+                    <td>
+                        <input type="radio" />
+                    </td>
+                    <td>
+                        <input type="radio" />
+                    </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="table-responsive">
+            <label class="font-weight-bold">Shiksha Level</label>
+            <table class="table table-hover text-center table-bordered">
+                <thead class="thead-light">
+                    <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Achieved</th>
+                    <th scope="col">Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="form-group">
+                    <th scope="row">Shraddavan</th>
+                    <td>
+                        <input type="checkbox" />
+                    </td>
+                    <td>
+                        <input type="text" class="form-control" id="datetimepicker" placeholder="DD/MM/YYYY">
+                    </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>    
+     </div>
+
+    <script>
+    $(function () {
+      $("#datetimepicker").datetimepicker({
+        timepicker:false,
+        format: 'd/m/Y',
+      });
+    });
+    </script>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  </body>
+</html>
