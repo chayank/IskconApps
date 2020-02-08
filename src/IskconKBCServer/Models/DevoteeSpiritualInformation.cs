@@ -22,7 +22,5 @@ namespace IskconKBCServer.Models
         public string ShikshaLevel { get; set; }
         public string ShikshaLevelReceivedDates { get; set; }
         public IdentityUser CaregiverDevotee { get; set; }
-
-
     }
 }

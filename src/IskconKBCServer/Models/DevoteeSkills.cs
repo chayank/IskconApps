@@ -18,7 +18,5 @@ namespace IskconKBCServer.Models
         public string SpecialSkills { get; set; }
 
         public IdentityUser Devotee { get; set; }
-
-
     }
 }
