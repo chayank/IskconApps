@@ -4,14 +4,16 @@ using IskconKBCServer.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace IskconKBCServer.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200208082150_InitialCreate2")]
+    partial class InitialCreate2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -67,38 +69,6 @@ namespace IskconKBCServer.Data.Migrations
                     b.HasIndex("DevoteeId");
 
                     b.ToTable("DevoteeDetails");
-                });
-
-            modelBuilder.Entity("IskconKBCServer.Models.DevoteeLanguageProficiencies", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("DevoteeId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("MotherTongue")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Read")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Speak")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("TranslatableFromEnglish")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Write")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("DevoteeId");
-
-                    b.ToTable("DevoteeLanguageProficiencies");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -302,13 +272,6 @@ namespace IskconKBCServer.Data.Migrations
                 });
 
             modelBuilder.Entity("IskconKBCServer.Models.DevoteeDetails", b =>
-                {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "Devotee")
-                        .WithMany()
-                        .HasForeignKey("DevoteeId");
-                });
-
-            modelBuilder.Entity("IskconKBCServer.Models.DevoteeLanguageProficiencies", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "Devotee")
                         .WithMany()
