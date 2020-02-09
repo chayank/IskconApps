@@ -23,7 +23,7 @@ namespace IskconKBCServer.Models
         public int EmergencyContactName { get; set; }
         public int EmergencyContactMobileNo { get; set; }
 
-        public IdentityUser Devotee { get; set; }
+        public Devotee Devotee { get; set; }
 
     }
 }

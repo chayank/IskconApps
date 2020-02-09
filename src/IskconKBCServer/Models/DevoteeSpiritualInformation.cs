@@ -21,6 +21,6 @@ namespace IskconKBCServer.Models
         public string Teaching { get; set; }
         public string ShikshaLevel { get; set; }
         public string ShikshaLevelReceivedDates { get; set; }
-        public IdentityUser CaregiverDevotee { get; set; }
+        public Devotee CaregiverDevotee { get; set; }
     }
 }

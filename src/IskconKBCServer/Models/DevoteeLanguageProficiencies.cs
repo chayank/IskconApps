@@ -16,7 +16,7 @@ namespace IskconKBCServer.Models
         public string MotherTongue { get; set; }
         public string TranslatableFromEnglish { get; set; }
 
-        public IdentityUser Devotee { get; set; }
+        public Devotee Devotee { get; set; }
     }
 
 }
