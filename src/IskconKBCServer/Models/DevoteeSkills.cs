@@ -10,7 +10,6 @@ namespace IskconKBCServer.Models
     public class DevoteeSkills
     {
         public int Id { get; set; }
-        public string DevoteeId { get; set; }
         public string Learning { get; set; }
         public string Teaching { get; set; }
         public string UsingInYatra { get; set; }

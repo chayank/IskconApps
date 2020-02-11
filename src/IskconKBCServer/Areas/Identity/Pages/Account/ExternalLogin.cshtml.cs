@@ -6,6 +6,8 @@ using System.Security.Claims;
 using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
+using IskconKBCServer.Data;
+using IskconKBCServer.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
@@ -19,17 +21,20 @@ namespace IskconKBCServer.Areas.Identity.Pages.Account
     [AllowAnonymous]
     public class ExternalLoginModel : PageModel
     {
+        private readonly ApplicationDbContext _context;
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly UserManager<IdentityUser> _userManager;
         private readonly IEmailSender _emailSender;
         private readonly ILogger<ExternalLoginModel> _logger;
 
         public ExternalLoginModel(
+            ApplicationDbContext context,
             SignInManager<IdentityUser> signInManager,
             UserManager<IdentityUser> userManager,
             ILogger<ExternalLoginModel> logger,
             IEmailSender emailSender)
         {
+            _context = context;
             _signInManager = signInManager;
             _userManager = userManager;
             _logger = logger;
@@ -53,6 +58,12 @@ namespace IskconKBCServer.Areas.Identity.Pages.Account
 
             [EmailAddress]
             public string Email { get; set; }
+
+            [Required]
+            public string FirstName { get; set; }
+
+            [Required]
+            public string LastName { get; set; }
         }
 
         public IActionResult OnGetAsync()
@@ -152,6 +163,10 @@ namespace IskconKBCServer.Areas.Identity.Pages.Account
                         //    $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
 
                         var result1 = await _userManager.ConfirmEmailAsync(user, code);
+
+                        var devotee = new Devotee { UserId = user.Id, FirstName = Input.FirstName, LastName = Input.LastName , RelationshipWithUser=Common.Relation.Self};
+                        _context.Devotees.Add(devotee);
+                        await _context.SaveChangesAsync();
 
                         // Sign in the user with this external login provider if the user already has a login.
                         var result2 = await _signInManager.ExternalLoginSignInAsync(info.LoginProvider, info.ProviderKey, isPersistent: false, bypassTwoFactor: true);

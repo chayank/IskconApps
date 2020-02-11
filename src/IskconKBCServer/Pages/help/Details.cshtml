@@ -1,0 +1,79 @@
+﻿@page
+@model IskconKBCServer.Pages.help.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>DevoteeDetail</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DevoteeDetail.InitiatedName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DevoteeDetail.InitiatedName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DevoteeDetail.Sex)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DevoteeDetail.Sex)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DevoteeDetail.Dob)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DevoteeDetail.Dob)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DevoteeDetail.Address)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DevoteeDetail.Address)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DevoteeDetail.Profession)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DevoteeDetail.Profession)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DevoteeDetail.MobileNo)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DevoteeDetail.MobileNo)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DevoteeDetail.WhatsappMobileNo)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DevoteeDetail.WhatsappMobileNo)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DevoteeDetail.EmergencyContactName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DevoteeDetail.EmergencyContactName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DevoteeDetail.EmergencyContactMobileNo)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DevoteeDetail.EmergencyContactMobileNo)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DevoteeDetail.Devotee)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DevoteeDetail.Devotee.FirstName)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-page="./Edit" asp-route-id="@Model.DevoteeDetail.Id">Edit</a> |
+    <a asp-page="./Index">Back to List</a>
+</div>

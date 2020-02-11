@@ -1,0 +1,90 @@
+﻿@page
+@model IskconKBCServer.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.DevoteeDetail[0].InitiatedName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DevoteeDetail[0].Sex)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DevoteeDetail[0].Dob)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DevoteeDetail[0].Address)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DevoteeDetail[0].Profession)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DevoteeDetail[0].MobileNo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DevoteeDetail[0].WhatsappMobileNo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DevoteeDetail[0].EmergencyContactName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DevoteeDetail[0].EmergencyContactMobileNo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DevoteeDetail[0].Devotee)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.DevoteeDetail) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.InitiatedName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Sex)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Dob)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Address)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Profession)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MobileNo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.WhatsappMobileNo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EmergencyContactName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EmergencyContactMobileNo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Devotee.FirstName)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

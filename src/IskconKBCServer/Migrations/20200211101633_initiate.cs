@@ -1,10 +1,9 @@
 ﻿using System;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace IskconKBCServer.Data.Migrations
+namespace IskconKBCServer.Migrations
 {
-    public partial class CreateIdentitySchema : Migration
+    public partial class initiate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -52,7 +51,7 @@ namespace IskconKBCServer.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     RoleId = table.Column<string>(nullable: false),
                     ClaimType = table.Column<string>(nullable: true),
                     ClaimValue = table.Column<string>(nullable: true)
@@ -73,7 +72,7 @@ namespace IskconKBCServer.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     UserId = table.Column<string>(nullable: false),
                     ClaimType = table.Column<string>(nullable: true),
                     ClaimValue = table.Column<string>(nullable: true)
@@ -153,6 +152,80 @@ namespace IskconKBCServer.Data.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Devotee",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserId = table.Column<string>(nullable: true),
+                    RelationshipWithUser = table.Column<int>(nullable: false),
+                    FirstName = table.Column<string>(nullable: false),
+                    LastName = table.Column<string>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Devotee", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Devotee_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "DevoteeDetail",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    DevoteeId = table.Column<int>(nullable: false),
+                    InitiatedName = table.Column<string>(nullable: true),
+                    Sex = table.Column<int>(nullable: false),
+                    Dob = table.Column<DateTime>(nullable: false),
+                    Address = table.Column<string>(nullable: false),
+                    Profession = table.Column<string>(nullable: true),
+                    MobileNo = table.Column<string>(nullable: false),
+                    WhatsappMobileNo = table.Column<string>(nullable: true),
+                    EmergencyContactName = table.Column<string>(nullable: false),
+                    EmergencyContactMobileNo = table.Column<string>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DevoteeDetail", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_DevoteeDetail_Devotee_DevoteeId",
+                        column: x => x.DevoteeId,
+                        principalTable: "Devotee",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "DevoteeLanguageProficiency",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    DevoteeId = table.Column<int>(nullable: false),
+                    Speak = table.Column<string>(nullable: true),
+                    Read = table.Column<string>(nullable: true),
+                    Write = table.Column<string>(nullable: true),
+                    MotherTongue = table.Column<string>(nullable: true),
+                    TranslatableFromEnglish = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DevoteeLanguageProficiency", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_DevoteeLanguageProficiency_Devotee_DevoteeId",
+                        column: x => x.DevoteeId,
+                        principalTable: "Devotee",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -191,6 +264,21 @@ namespace IskconKBCServer.Data.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Devotee_UserId",
+                table: "Devotee",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_DevoteeDetail_DevoteeId",
+                table: "DevoteeDetail",
+                column: "DevoteeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_DevoteeLanguageProficiency_DevoteeId",
+                table: "DevoteeLanguageProficiency",
+                column: "DevoteeId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -211,7 +299,16 @@ namespace IskconKBCServer.Data.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "DevoteeDetail");
+
+            migrationBuilder.DropTable(
+                name: "DevoteeLanguageProficiency");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
+
+            migrationBuilder.DropTable(
+                name: "Devotee");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");

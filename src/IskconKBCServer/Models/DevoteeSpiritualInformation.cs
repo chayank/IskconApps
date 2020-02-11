@@ -11,7 +11,6 @@ namespace IskconKBCServer.Models
     public class DevoteeSpiritualInformation
     {
         public int Id { get; set; }
-        public string CaregiverDevoteeId { get; set; }
         public bool IsAssociatedToBv { get; set; }
         public  string BvName{ get; set; }
         public string SectorName { get; set; }

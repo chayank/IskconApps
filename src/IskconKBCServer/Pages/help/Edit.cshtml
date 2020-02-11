@@ -1,0 +1,80 @@
+﻿@page
+@model IskconKBCServer.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>DevoteeDetail</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="DevoteeDetail.Id" />
+            <div class="form-group">
+                <label asp-for="DevoteeDetail.DevoteeId" class="control-label"></label>
+                <select asp-for="DevoteeDetail.DevoteeId" class="form-control" asp-items="ViewBag.DevoteeId"></select>
+                <span asp-validation-for="DevoteeDetail.DevoteeId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DevoteeDetail.InitiatedName" class="control-label"></label>
+                <input asp-for="DevoteeDetail.InitiatedName" class="form-control" />
+                <span asp-validation-for="DevoteeDetail.InitiatedName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DevoteeDetail.Sex" class="control-label"></label>
+                <select asp-for="DevoteeDetail.Sex" class="form-control"></select>
+                <span asp-validation-for="DevoteeDetail.Sex" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DevoteeDetail.Dob" class="control-label"></label>
+                <input asp-for="DevoteeDetail.Dob" class="form-control" />
+                <span asp-validation-for="DevoteeDetail.Dob" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DevoteeDetail.Address" class="control-label"></label>
+                <input asp-for="DevoteeDetail.Address" class="form-control" />
+                <span asp-validation-for="DevoteeDetail.Address" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DevoteeDetail.Profession" class="control-label"></label>
+                <input asp-for="DevoteeDetail.Profession" class="form-control" />
+                <span asp-validation-for="DevoteeDetail.Profession" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DevoteeDetail.MobileNo" class="control-label"></label>
+                <input asp-for="DevoteeDetail.MobileNo" class="form-control" />
+                <span asp-validation-for="DevoteeDetail.MobileNo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DevoteeDetail.WhatsappMobileNo" class="control-label"></label>
+                <input asp-for="DevoteeDetail.WhatsappMobileNo" class="form-control" />
+                <span asp-validation-for="DevoteeDetail.WhatsappMobileNo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DevoteeDetail.EmergencyContactName" class="control-label"></label>
+                <input asp-for="DevoteeDetail.EmergencyContactName" class="form-control" />
+                <span asp-validation-for="DevoteeDetail.EmergencyContactName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DevoteeDetail.EmergencyContactMobileNo" class="control-label"></label>
+                <input asp-for="DevoteeDetail.EmergencyContactMobileNo" class="form-control" />
+                <span asp-validation-for="DevoteeDetail.EmergencyContactMobileNo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

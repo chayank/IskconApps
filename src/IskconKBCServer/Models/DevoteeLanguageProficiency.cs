@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace IskconKBCServer.Models
 {
-    public class DevoteeLanguageProficiencies
+    public class DevoteeLanguageProficiency
     {
         public int Id { get; set; }
-        public string DevoteeId { get; set; }
+        public int DevoteeId { get; set; }
         public string Speak { get; set; }
         public string Read { get; set; }
         public string Write { get; set; }

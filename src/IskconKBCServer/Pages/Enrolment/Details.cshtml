@@ -1,0 +1,133 @@
+﻿@page
+@model IskconKBCServer.DetailsModel
+@{
+    ViewData["Title"] = "Details";
+}
+
+<ul class="nav nav-tabs">
+    <li class="nav-item">
+        <a class="nav-link " href="/Enrolment/FamilyMember">Family Members</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link active" href="/Enrolment/Details">Details</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="/Enrolment/Language">Language</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="/Enrolment/Skills">Skills</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="/Enrolment/SpiritualInfo">Spiritual Info</a>
+    </li>
+</ul>
+<hr />
+<div class="row">
+    <div class="col-md-6">
+        @{ int Id = Convert.ToInt32(ViewData["DevoteeId"]);}
+        <label for="family_member">Choose the family member :</label>
+        <select class="form-control" id="family_member" onchange="ChangeMember(this)">
+            @foreach (var devotee in Model.Devotees)
+            {
+                @if (devotee.Id == Id)
+                {
+                    <option selected="selected" value="@devotee.Id">@devotee.LastName, @devotee.FirstName</option>
+                }
+                else
+                {
+                    <option value="@devotee.Id">@devotee.LastName, @devotee.FirstName</option>
+                }
+            }
+        </select>
+    </div>
+</div>
+<hr/>
+<div class="row">
+    <div class="col-md-6">
+        <form method="post">
+            <input asp-for="DevoteeDetail.DevoteeId" type="hidden" value="@Id" />
+            <div class="form-group">
+                <label asp-for="DevoteeDetail.InitiatedName" class="control-label">Initiated Name</label>
+                <input asp-for="DevoteeDetail.InitiatedName" class="form-control" />
+                <span asp-validation-for="DevoteeDetail.InitiatedName" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="DevoteeDetail.Sex" class="control-label">Gender</label>
+                <select asp-for="DevoteeDetail.Sex" class="form-control"
+                        asp-items="Html.GetEnumSelectList<IskconKBCServer.Common.Gender>()">
+                    @if (Model.DevoteeDetail == null)
+                    {
+                        <option selected="selected" value="Choose Gender">Choose Gender</option>
+                    }
+                </select>
+                <span asp-validation-for="DevoteeDetail.Sex" class="text-danger"></span>
+            </div>
+
+            <div class="form-row">
+                <label asp-for="DevoteeDetail.Dob" class="control-label">Date Of Birth</label>
+                <input asp-for="DevoteeDetail.Dob" class="form-control" />
+                <span asp-validation-for="DevoteeDetail.Dob" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="DevoteeDetail.Address" class="control-label">Address</label>
+                <input asp-for="DevoteeDetail.Address" class="form-control" />
+                <span asp-validation-for="DevoteeDetail.Address" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="DevoteeDetail.Profession" class="control-label">Profession</label>
+                <input asp-for="DevoteeDetail.Profession" class="form-control" />
+                <span asp-validation-for="DevoteeDetail.Profession" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DevoteeDetail.MobileNo" class="control-label">MobileNo</label>
+                <input asp-for="DevoteeDetail.MobileNo" class="form-control" />
+                <span asp-validation-for="DevoteeDetail.MobileNo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DevoteeDetail.WhatsappMobileNo" class="control-label">Whatsapp Mobile No.</label>
+                <input asp-for="DevoteeDetail.WhatsappMobileNo" class="form-control" />
+                <span asp-validation-for="DevoteeDetail.WhatsappMobileNo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DevoteeDetail.EmergencyContactName" class="control-label">Emergency Contact Name</label>
+                <input asp-for="DevoteeDetail.EmergencyContactName" class="form-control" />
+                <span asp-validation-for="DevoteeDetail.EmergencyContactName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DevoteeDetail.EmergencyContactMobileNo" class="control-label">Emergency Contact No.</label>
+                <input asp-for="DevoteeDetail.EmergencyContactMobileNo" class="form-control" />
+                <span asp-validation-for="DevoteeDetail.EmergencyContactMobileNo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                @if (Model.DevoteeDetail != null)
+                {
+                    <button type="submit" asp-page-handler="Update" class="btn btn-primary">Update</button>
+                }
+                else
+                {
+                    <input type="submit" class="btn btn-primary" />
+                }
+            </div>
+        </form>
+    </div>
+
+    <div class="col-md-6">
+
+    </div>
+</div>
+    <script type="text/javascript">
+          function ChangeMember(selectObject) {
+              var id = selectObject.value;  
+              console.log(id);
+              window.location.href = "/Enrolment/Details?id="+id;
+
+                
+          }
+    </script>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

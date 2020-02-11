@@ -1,0 +1,145 @@
+﻿@page
+@model IskconKBCServer.FamilyMemberModel
+@{
+    ViewData["Title"] = "FamilyMember";
+}
+
+    <ul class="nav nav-tabs">
+        <li class="nav-item">
+            <a class="nav-link active" href="/Enrolment/FamilyMember">Family Members</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/Enrolment/Details">Details</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/Enrolment/Language">Language</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/Enrolment/Skills">Skills</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/Enrolment/SpiritualInfo">Spiritual Info</a>
+        </li>
+    </ul>
+
+    <table class="table table-sm" id="tblfamily">
+        <br />
+        <thead>
+            <tr>
+                <th scope="col">First Name</th>
+                <th scope="col">Last Name</th>
+                <th scope="col">Relation</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var devotee in Model.FamilyDetails)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => devotee.FirstName)</td>
+                    <td>@Html.DisplayFor(modelItem => devotee.LastName)</td>
+                    <td>@Html.DisplayFor(modelItem => devotee.RelationshipWithUser)</td>
+                    @if (devotee.RelationshipWithUser != Common.Relation.Self)
+                    {
+                        <form method="post" asp-page-handler="delete" asp-route-id="@devotee.Id">
+                            <td><button type="submit" class="btn btn-danger">Remove</button></td>
+                        </form>
+                    }
+                    else
+                    {
+                        <td><button type="button" class="btn btn-danger" style="visibility: hidden;">blank</button></td>
+                    }
+
+                </tr>
+            }
+        </tbody>
+        @if (Model.FamilyDetails.Count < 5)
+        {
+            <tfoot>
+                <tr>
+                    <form method="post">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <input asp-for="Devotee.UserId" type="hidden" value="@ViewBag.UserId" />
+                        <td>
+                            <input asp-for="Devotee.FirstName" class="form-control" />
+                            <span asp-validation-for="Devotee.FirstName" class="text-danger"></span>
+                        </td>
+                        <td>
+                            <input asp-for="Devotee.LastName" class="form-control" />
+                            <span asp-validation-for="Devotee.LastName" class="text-danger"></span>
+                        </td>
+                        <td>
+                            <select asp-for="Devotee.RelationshipWithUser"
+                                    asp-items="Html.GetEnumSelectList<IskconKBCServer.Common.Relation>().Where(x=>!x.Value.Contains('5'));"
+                                    class="form-control">
+                                <option selected="selected" value="Choose">Choose</option>
+                            </select>
+                            <span asp-validation-for="Devotee.RelationshipWithUser" class="text-danger"></span>
+                        </td>
+                        <td>
+                            <!--<button type="submit" class="btn btn-primary" id="btnAdd">Add</button>-->
+                            <input type="submit" value="Add" class="form-control btn btn-primary" />
+                        </td>
+                    </form>
+                </tr>
+            </tfoot>
+        }
+
+    </table>
+<script type="text/javascript">
+    $("body").on("click", "#btnAdd", function () {
+        //Reference the First Name , Last Name and Relation.
+        var txtFirstName = $("#txtFirstName");
+        var txtLastName = $("#txtLastName");
+        var optRelation = $("#optRelation");
+
+        //Get the reference of the Table's TBODY element.
+        var tBody = $("#tblfamily > TBODY")[0];
+
+        //Add Row.
+        var row = tBody.insertRow(-1);
+
+        //Add First Name cell.
+        var cell = $(row.insertCell(-1));
+        cell.html(txtFirstName.val());
+
+        //Add Last Name cell.
+        cell = $(row.insertCell(-1));
+        cell.html(txtLastName.val());
+
+        //Add Relation cell.
+        cell = $(row.insertCell(-1));
+        cell.html(optRelation.val());
+
+        //Add Button cell.
+        cell = $(row.insertCell(-1));
+        var btnRemove = $("<input />");
+        btnRemove.attr("type", "button");
+        btnRemove.attr("onclick", "Remove(this);");
+        btnRemove.attr("class", "btn btn-danger")
+        btnRemove.val("Remove");
+        cell.append(btnRemove);
+
+        //Clear the TextBoxes.
+        txtFirstName.val("");
+        txtLastName.val("");
+    });
+
+    function Remove(button) {
+        //Determine the reference of the Row using the Button.
+        var row = $(button).closest("TR");
+        var name = $("TD", row).eq(0).html();
+        if (confirm("Do you want to delete: " + name)) {
+            //Get the reference of the Table.
+            var table = $("#tblfamily")[0];
+
+            //Delete the Table row using it's Index.
+            table.deleteRow(row[0].rowIndex);
+        }
+    };
+</script>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

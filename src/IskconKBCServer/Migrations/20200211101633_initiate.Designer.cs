@@ -4,14 +4,16 @@ using IskconKBCServer.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace IskconKBCServer.Data.Migrations
+namespace IskconKBCServer.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200211101633_initiate")]
+    partial class initiate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -19,7 +21,35 @@ namespace IskconKBCServer.Data.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("IskconKBCServer.Models.DevoteeDetails", b =>
+            modelBuilder.Entity("IskconKBCServer.Models.Devotee", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("RelationshipWithUser")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Devotee");
+                });
+
+            modelBuilder.Entity("IskconKBCServer.Models.DevoteeDetail", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -27,30 +57,28 @@ namespace IskconKBCServer.Data.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Address")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("DevoteeId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("DevoteeId")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("Dob")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("EmergencyContactMobileNo")
-                        .HasColumnType("int");
+                    b.Property<string>("EmergencyContactMobileNo")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("EmergencyContactName")
-                        .HasColumnType("int");
-
-                    b.Property<string>("FirstName")
+                    b.Property<string>("EmergencyContactName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("InitiatedName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("LastName")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("MobileNo")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Profession")
@@ -66,18 +94,18 @@ namespace IskconKBCServer.Data.Migrations
 
                     b.HasIndex("DevoteeId");
 
-                    b.ToTable("DevoteeDetails");
+                    b.ToTable("DevoteeDetail");
                 });
 
-            modelBuilder.Entity("IskconKBCServer.Models.DevoteeLanguageProficiencies", b =>
+            modelBuilder.Entity("IskconKBCServer.Models.DevoteeLanguageProficiency", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("DevoteeId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("DevoteeId")
+                        .HasColumnType("int");
 
                     b.Property<string>("MotherTongue")
                         .HasColumnType("nvarchar(max)");
@@ -98,7 +126,7 @@ namespace IskconKBCServer.Data.Migrations
 
                     b.HasIndex("DevoteeId");
 
-                    b.ToTable("DevoteeLanguageProficiencies");
+                    b.ToTable("DevoteeLanguageProficiency");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -301,18 +329,29 @@ namespace IskconKBCServer.Data.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("IskconKBCServer.Models.DevoteeDetails", b =>
+            modelBuilder.Entity("IskconKBCServer.Models.Devotee", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "Devotee")
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "User")
                         .WithMany()
-                        .HasForeignKey("DevoteeId");
+                        .HasForeignKey("UserId");
                 });
 
-            modelBuilder.Entity("IskconKBCServer.Models.DevoteeLanguageProficiencies", b =>
+            modelBuilder.Entity("IskconKBCServer.Models.DevoteeDetail", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "Devotee")
+                    b.HasOne("IskconKBCServer.Models.Devotee", "Devotee")
                         .WithMany()
-                        .HasForeignKey("DevoteeId");
+                        .HasForeignKey("DevoteeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("IskconKBCServer.Models.DevoteeLanguageProficiency", b =>
+                {
+                    b.HasOne("IskconKBCServer.Models.Devotee", "Devotee")
+                        .WithMany()
+                        .HasForeignKey("DevoteeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

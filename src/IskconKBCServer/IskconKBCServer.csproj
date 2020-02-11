@@ -20,10 +20,19 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Pages\Enrolment\" />
     <Folder Include="Services\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="Areas\Identity\Data\ApplicationDbContext.cs" />
+    <Compile Remove="Migrations\20200209125358_initiate1.cs" />
+    <Compile Remove="Migrations\20200209125358_initiate1.Designer.cs" />
+    <Compile Remove="Migrations\20200209125717_initiate1.cs" />
+    <Compile Remove="Migrations\20200209125717_initiate1.Designer.cs" />
+    <Compile Remove="Migrations\20200209130129_initiate1.cs" />
+    <Compile Remove="Migrations\20200209130129_initiate1.Designer.cs" />
+    <Compile Remove="Migrations\20200209131604_initiate1.cs" />
+    <Compile Remove="Migrations\20200209131604_initiate1.Designer.cs" />
+    <Compile Remove="Migrations\20200209131758_initiate1.cs" />
+    <Compile Remove="Migrations\20200209131758_initiate1.Designer.cs" />
   </ItemGroup>
 </Project>
