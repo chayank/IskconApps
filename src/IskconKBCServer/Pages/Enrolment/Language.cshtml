@@ -4,22 +4,127 @@
     ViewData["Title"] = "Language";
 }
 
+<ul class="nav nav-tabs">
+    <li class="nav-item">
+        <a class="nav-link " href="/Enrolment/FamilyMember">Family Members</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link " href="/Enrolment/Details">Details</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link active" href="/Enrolment/Language">Language</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="/Enrolment/Skills">Skills</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="/Enrolment/SpiritualInfo">Spiritual Info</a>
+    </li>
+</ul>
+<hr />
+<div class="row">
+    <div class="col-md-6">
+        @{ int Id = Convert.ToInt32(ViewData["DevoteeId"]);}
+        <label for="family_member">Choose the family member :</label>
+        <select class="form-control" id="family_member" onchange="ChangeMember(this)">
+            @foreach (var devotee in Model.Devotees)
+            {
+                @if (devotee.Id == Id)
+                {
+                    <option selected="selected" value="@devotee.Id">@devotee.LastName, @devotee.FirstName</option>
+                }
+                else
+                {
+                    <option value="@devotee.Id">@devotee.LastName, @devotee.FirstName</option>
+                }
+            }
+        </select>
+    </div>
+</div>
+<hr />
+<div class="row">
+    <div class="col-md-8">
+        <form method="post">
+            <div class="table-responsive">
+                <table class="table table-hover text-center table-bordered">
+                    <thead class="thead-light">
+                        <tr>
+                            <th scope="col">Language</th>
+                            <th scope="col">Speak</th>
+                            <th scope="col">Read</th>
+                            <th scope="col">Write</th>
+                            <th scope="col">Translatable From English</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{var languages = Enum.GetNames(typeof(Common.Language));}
+                        @for (var i = 0; i < languages.Length; i++)
+                        {
+                            <tr class="form-group">
+                                <th scope="row">@languages.ElementAt(i)</th>
+                                <td>
+                                    <input asp-for="Speaks[i]" />
+                                </td>
+                                <td>
+                                    <input asp-for="Reads[i]" />
+                                </td>
+                                <td>
+                                    <input asp-for="Writes[i]" />
+                                </td>
+                                <td>
+                                    <input asp-for="Translatables[i]" />
+                                </td>
+                                <!--<td>
+                                    <input type="radio" asp-for="MotherTongue" value="Model.MotherTongue" />
+                                </td>-->
+                            </tr>
+
+                        }
+                    </tbody>
+
+                </table>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="MotherTongue" class="control-label">Mother Tongue</label>
+                <select asp-for="MotherTongue" asp-items="Html.GetEnumSelectList<IskconKBCServer.Common.Language>()" class="form-control">
+                </select>
+                <span asp-validation-for="MotherTongue" class="text-danger"></span>
+            </div>
 
 
-    <ul class="nav nav-tabs">
-        <li class="nav-item">
-            <a class="nav-link " href="/Enrolment/FamilyMember">Family Members</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link " href="/Enrolment/Details">Details</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link active" href="/Enrolment/Language">Language</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="/Enrolment/Skills">Skills</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="/Enrolment/SpiritualInfo">Spiritual Info</a>
-        </li>
-    </ul>
+            <div class="form-group">
+                @if (Model.DevoteeLanguageProficiency != null)
+                {
+                    <button type="submit" asp-page-handler="Update" asp-route-id="@Id" class="btn btn-primary">Update</button>
+                }
+                else
+                {
+                    <input type="submit" asp-route-id="@Id" class="btn btn-primary" />
+                }
+            </div>
+        </form>
+    </div>
+
+    <div class="col-md-6">
+
+    </div>
+
+
+    <script>
+        $('.chosen-select').chosen();
+    </script>
+
+    <script type="text/javascript">
+        function ChangeMember(selectObject) {
+            var id = selectObject.value;
+            console.log(id);
+            window.location.href = "/Enrolment/Language?id=" + id;
+
+
+        }
+    </script>
+
+    @section Scripts {
+        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    }

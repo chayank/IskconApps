@@ -19,6 +19,7 @@ namespace IskconKBCServer.Data
         public DbSet<Devotee> Devotees { get; set; }
         public DbSet<DevoteeDetail> DevoteeDetails { get; set; }
         public DbSet<DevoteeLanguageProficiency> DevoteeLanguageProficiencies { get; set; }
+        public DbSet<DevoteeSkill> DevoteeSkills { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -26,6 +27,7 @@ namespace IskconKBCServer.Data
             modelBuilder.Entity<Devotee>().ToTable("Devotee");
             modelBuilder.Entity<DevoteeDetail>().ToTable("DevoteeDetail");
             modelBuilder.Entity<DevoteeLanguageProficiency>().ToTable("DevoteeLanguageProficiency");
+            modelBuilder.Entity<DevoteeSkill>().ToTable("DevoteeSkill");
         }
     }
 }

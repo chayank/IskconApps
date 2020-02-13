@@ -104,7 +104,7 @@
             <div class="form-group">
                 @if (Model.DevoteeDetail != null)
                 {
-                    <button type="submit" asp-page-handler="Update" class="btn btn-primary">Update</button>
+                    <button type="submit" asp-page-handler="Update"  asp-route-id="@Id" class="btn btn-primary">Update</button>
                 }
                 else
                 {

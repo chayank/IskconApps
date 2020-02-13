@@ -62,37 +62,26 @@ namespace IskconKBCServer
 
         }
 
-        public async Task<IActionResult> OnPostUpdateAsync()
+        public async Task<IActionResult> OnPostUpdateAsync(int? id)
         {
-            if (!ModelState.IsValid)
-            {
-                return Page();
-            }
-            _context.Attach(DevoteeDetail).State = EntityState.Modified;
+            var devoteeToUpdate = await _context.DevoteeDetails.FirstOrDefaultAsync(x => x.DevoteeId == id);
 
-            try
+            if (devoteeToUpdate == null)
+            {
+                return NotFound();
+            }
+
+            if (await TryUpdateModelAsync<DevoteeDetail>(
+                devoteeToUpdate,
+                "devotee", s => s.InitiatedName, s => s.Sex, s => s.Dob, s=>s.Address, 
+                s => s.Profession, s => s.MobileNo, s => s.WhatsappMobileNo,
+                s => s.EmergencyContactName, s => s.EmergencyContactMobileNo))
             {
                 await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!DevoteeDetailExists(DevoteeDetail.Id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
             }
 
             return await OnGetAsync(DevoteeDetail.DevoteeId);
 
-        }
-
-        private bool DevoteeDetailExists(int id)
-        {
-            return _context.DevoteeDetails.Any(e => e.Id == id);
         }
     }
 }

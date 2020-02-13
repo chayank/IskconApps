@@ -4,21 +4,128 @@
     ViewData["Title"] = "Skills";
 }
 
-    <ul class="nav nav-tabs">
-        <li class="nav-item">
-            <a class="nav-link " href="/Enrolment/FamilyMember">Family Members</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link " href="/Enrolment/Details">Details</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link " href="/Enrolment/Language">Language</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link active" href="/Enrolment/Skills">Skills</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="/Enrolment/SpiritualInfo">Spiritual Info</a>
-        </li>
-    </ul>
+<ul class="nav nav-tabs">
+    <li class="nav-item">
+        <a class="nav-link " href="/Enrolment/FamilyMember">Family Members</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link " href="/Enrolment/Details">Details</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link " href="/Enrolment/Language">Language</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link active" href="/Enrolment/Skills">Skills</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="/Enrolment/SpiritualInfo">Spiritual Info</a>
+    </li>
+</ul>
 
+<hr />
+<div class="row">
+    <div class="col-md-6">
+        @{ int Id = Convert.ToInt32(ViewData["DevoteeId"]);}
+        <label for="family_member">Choose the family member :</label>
+        <select class="form-control" id="family_member" onchange="ChangeMember(this)">
+            @foreach (var devotee in Model.Devotees)
+            {
+                @if (devotee.Id == Id)
+                {
+                    <option selected="selected" value="@devotee.Id">@devotee.LastName, @devotee.FirstName</option>
+                }
+                else
+                {
+                    <option value="@devotee.Id">@devotee.LastName, @devotee.FirstName</option>
+                }
+            }
+        </select>
+    </div>
+</div>
+<hr />
+<div class="row">
+    <div class="col-md-10">
+        <form method="post">
+            <div class="table-responsive">
+                <table class="table table-hover text-center table-bordered">
+                    <thead class="thead-light">
+                        <tr>
+                            <th scope="col">Skill Name</th>
+                            <th scope="col">Learning</th>
+                            <th scope="col">Teaching</th>
+                            <th scope="col">Using In Yatra</th>
+                            <th scope="col">Have The Skills</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{var skills = Enum.GetValues(typeof(Common.Enums.Skill)).Cast<Common.Enums.Skill>();}
+                        @{var count = skills.Count(); }
+                        @for (var i = 0; i <count ; i++)
+                        {
+                            <tr class="form-group">
+                                <th scope="row">@Common.Utils.EnumExtensions.GetDisplayName(skills.ElementAt(i))</th>
+                                <td>
+                                    <input asp-for="Learning[i]" />
+                                </td>
+                                <td>
+                                    <input asp-for="Teaching[i]" />
+                                </td>
+                                <td>
+                                    <input asp-for="UsingInYatra[i]" />
+                                </td>
+                                <td>
+                                    <input asp-for="HaveTheSkills[i]" />
+                                </td>
+                                <!--<td>
+                                    <input type="radio" asp-for="MotherTongue" value="Model.MotherTongue" />
+                                </td>-->
+                            </tr>
+
+                        }
+                    </tbody>
+
+                </table>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="SpecialSkills" class="control-label">Special Skills</label>
+                <input asp-for="SpecialSkills" class="form-control" />
+                <span asp-validation-for="SpecialSkills" class="text-danger"></span>
+            </div>
+
+
+            <div class="form-group">
+                @if (Model.DevoteeSkill != null)
+                {
+                    <button type="submit" asp-page-handler="Update" asp-route-id="@Id" class="btn btn-primary">Update</button>
+                }
+                else
+                {
+                    <input type="submit" asp-route-id="@Id" class="btn btn-primary" />
+                }
+            </div>
+        </form>
+    </div>
+
+    <div class="col-md-6">
+
+    </div>
+
+
+    <script>
+        $('.chosen-select').chosen();
+    </script>
+
+    <script type="text/javascript">
+        function ChangeMember(selectObject) {
+            var id = selectObject.value;
+            console.log(id);
+            window.location.href = "/Enrolment/Skills?id=" + id;
+
+
+        }
+    </script>
+
+    @section Scripts {
+        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    }

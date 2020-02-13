@@ -14,7 +14,7 @@ namespace IskconKBCServer.Common
         Bengali,
         Odiya,
         Bhojpuri,
-        Punjabui,
+        Punjabi,
         English
     }
 }

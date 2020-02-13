@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using IskconKBCServer.Common;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +14,7 @@ namespace IskconKBCServer.Models
         public string Speak { get; set; }
         public string Read { get; set; }
         public string Write { get; set; }
-        public string MotherTongue { get; set; }
+        public Language MotherTongue { get; set; }
         public string TranslatableFromEnglish { get; set; }
 
         public Devotee Devotee { get; set; }

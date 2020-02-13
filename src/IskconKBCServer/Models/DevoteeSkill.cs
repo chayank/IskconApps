@@ -7,9 +7,10 @@ using System.Threading.Tasks;
 
 namespace IskconKBCServer.Models
 {
-    public class DevoteeSkills
+    public class DevoteeSkill
     {
         public int Id { get; set; }
+        public int DevoteeId { get; set; }
         public string Learning { get; set; }
         public string Teaching { get; set; }
         public string UsingInYatra { get; set; }
