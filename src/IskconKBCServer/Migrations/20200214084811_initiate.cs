@@ -212,7 +212,7 @@ namespace IskconKBCServer.Migrations
                     Speak = table.Column<string>(nullable: true),
                     Read = table.Column<string>(nullable: true),
                     Write = table.Column<string>(nullable: true),
-                    MotherTongue = table.Column<string>(nullable: true),
+                    MotherTongue = table.Column<int>(nullable: false),
                     TranslatableFromEnglish = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -220,6 +220,58 @@ namespace IskconKBCServer.Migrations
                     table.PrimaryKey("PK_DevoteeLanguageProficiency", x => x.Id);
                     table.ForeignKey(
                         name: "FK_DevoteeLanguageProficiency_Devotee_DevoteeId",
+                        column: x => x.DevoteeId,
+                        principalTable: "Devotee",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "DevoteeSkill",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    DevoteeId = table.Column<int>(nullable: false),
+                    Learning = table.Column<string>(nullable: true),
+                    Teaching = table.Column<string>(nullable: true),
+                    UsingInYatra = table.Column<string>(nullable: true),
+                    HaveTheSkills = table.Column<string>(nullable: true),
+                    SpecialSkills = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DevoteeSkill", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_DevoteeSkill_Devotee_DevoteeId",
+                        column: x => x.DevoteeId,
+                        principalTable: "Devotee",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "DevoteeSpiritualInformation",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    DevoteeId = table.Column<int>(nullable: false),
+                    CareGiverDevoteeName = table.Column<string>(nullable: true),
+                    IsAssociatedToBv = table.Column<int>(nullable: false),
+                    BvName = table.Column<string>(nullable: true),
+                    SectorName = table.Column<string>(nullable: true),
+                    CircleName = table.Column<string>(nullable: true),
+                    ResponsibiltyType = table.Column<int>(nullable: false),
+                    Attending = table.Column<string>(nullable: true),
+                    Teaching = table.Column<string>(nullable: true),
+                    ShikshaLevel = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DevoteeSpiritualInformation", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_DevoteeSpiritualInformation_Devotee_DevoteeId",
                         column: x => x.DevoteeId,
                         principalTable: "Devotee",
                         principalColumn: "Id",
@@ -279,6 +331,16 @@ namespace IskconKBCServer.Migrations
                 name: "IX_DevoteeLanguageProficiency_DevoteeId",
                 table: "DevoteeLanguageProficiency",
                 column: "DevoteeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_DevoteeSkill_DevoteeId",
+                table: "DevoteeSkill",
+                column: "DevoteeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_DevoteeSpiritualInformation_DevoteeId",
+                table: "DevoteeSpiritualInformation",
+                column: "DevoteeId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -303,6 +365,12 @@ namespace IskconKBCServer.Migrations
 
             migrationBuilder.DropTable(
                 name: "DevoteeLanguageProficiency");
+
+            migrationBuilder.DropTable(
+                name: "DevoteeSkill");
+
+            migrationBuilder.DropTable(
+                name: "DevoteeSpiritualInformation");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

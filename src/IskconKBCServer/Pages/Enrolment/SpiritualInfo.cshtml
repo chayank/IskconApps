@@ -4,22 +4,179 @@
     ViewData["Title"] = "SpiritualInfo";
 }
 
-    <ul class="nav nav-tabs">
-        <li class="nav-item">
-            <a class="nav-link " href="/Enrolment/FamilyMember">Family Members</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link " href="/Enrolment/Details">Details</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link " href="/Enrolment/Language">Language</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link " href="/Enrolment/Skills">Skills</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link active" href="/Enrolment/SpiritualInfo">Spiritual Info</a>
-        </li>
-    </ul>
+<ul class="nav nav-tabs">
+    <li class="nav-item">
+        <a class="nav-link " href="/Enrolment/FamilyMember">Family Members</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link " href="/Enrolment/Details">Details</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link " href="/Enrolment/Language">Language</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link " href="/Enrolment/Skills">Skills</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link active" href="/Enrolment/SpiritualInfo">Spiritual Info</a>
+    </li>
+</ul>
+<hr />
+<div class="row">
+    <div class="col-md-6">
+        @{ int Id = Convert.ToInt32(ViewData["DevoteeId"]);}
+        <label for="family_member">Choose the family member :</label>
+        <select class="form-control" id="family_member" onchange="ChangeMember(this)">
+            @foreach (var devotee in Model.Devotees)
+            {
+                @if (devotee.Id == Id)
+                {
+                    <option selected="selected" value="@devotee.Id">@devotee.LastName, @devotee.FirstName</option>
+                }
+                else
+                {
+                    <option value="@devotee.Id">@devotee.LastName, @devotee.FirstName</option>
+                }
+            }
+        </select>
+    </div>
+</div>
+<hr />
+
+<div class="row">
+    <div class="col-md-10">
+        <form method="post">
+            <!--Counselllor Name-->
+            <div class="form-group">
+                <label asp-for="DevoteeSpiritualInformation.CareGiverDevoteeName" class="control-label">Caregiver Devotee</label>
+                <input asp-for="DevoteeSpiritualInformation.CareGiverDevoteeName" class="form-control" />
+                <span asp-validation-for="DevoteeSpiritualInformation.CareGiverDevoteeName" class="text-danger"></span>
+            </div>
+
+            <!--part of Bvk ?-->
+            <div class="form-group">
+                <label asp-for="DevoteeSpiritualInformation.IsAssociatedToBv" class="control-label">Are You Part Of Any Bhakti Vriksha ?</label>
+                <select asp-for="DevoteeSpiritualInformation.IsAssociatedToBv" class="form-control"
+                        asp-items="Html.GetEnumSelectList<IskconKBCServer.Common.Enums.Decision>()">
+                    @if (Model.DevoteeSpiritualInformation == null)
+                    {
+                        <option selected="selected" value="yes/no">Choose Yes/No</option>
+                    }
+                </select>
+                <span asp-validation-for="DevoteeSpiritualInformation.IsAssociatedToBv" class="text-danger"></span>
+            </div>
+
+            <!--bv/secto/circle name-->
+            <div class="form-group">
+                <label asp-for="DevoteeSpiritualInformation.BvName" class="control-label">Bhakti Vriksha Name</label>
+                <input asp-for="DevoteeSpiritualInformation.BvName" class="form-control" />
+                <span asp-validation-for="DevoteeSpiritualInformation.BvName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DevoteeSpiritualInformation.SectorName" class="control-label">Sector Name</label>
+                <input asp-for="DevoteeSpiritualInformation.SectorName" class="form-control" />
+                <span asp-validation-for="DevoteeSpiritualInformation.SectorName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DevoteeSpiritualInformation.CircleName" class="control-label">Circle Name</label>
+                <input asp-for="DevoteeSpiritualInformation.CircleName" class="form-control" />
+                <span asp-validation-for="DevoteeSpiritualInformation.CircleName" class="text-danger"></span>
+            </div>
+
+            <!--responsibilty in Bv ?-->
+            <div class="form-group">
+                <label asp-for="DevoteeSpiritualInformation.ResponsibiltyType" class="control-label">I Have Responsibility In Bhakti Vriksha</label>
+                <select asp-for="DevoteeSpiritualInformation.ResponsibiltyType" class="form-control"
+                        asp-items="Html.GetEnumSelectList<IskconKBCServer.Common.BvResponsibility>()">
+                    @if (Model.DevoteeSpiritualInformation == null)
+                    {
+                        <option selected="selected" value="Choose Responsibilty">Choose Responsibilty</option>
+                    }
+                </select>
+                <span asp-validation-for="DevoteeSpiritualInformation.IsAssociatedToBv" class="text-danger"></span>
+            </div>
+
+            <div class="table-responsive">
+                <table class="table table-hover text-center table-bordered">
+                    <thead class="thead-light">
+                        <tr>
+                            <th scope="col">Program Name</th>
+                            <th scope="col">Attending Or Teaching</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{var prTypes = Enum.GetValues(typeof(Common.ProgramType)).Cast<Common.ProgramType>();}
+                        @{var count = prTypes.Count(); }
+                        @for (var i = 0; i < count; i++)
+                        {
+                            <tr class="form-group">
+                                <th scope="row">@Common.Utils.EnumExtensions.GetDisplayName(prTypes.ElementAt(i))</th>
+                                <td>
+                                    <select asp-for="AttendingOrTeaching[i]" class="form-control"
+                                            asp-items="Html.GetEnumSelectList<IskconKBCServer.Common.Enums.SpiritualInfoCustomOption>()">
+                                    </select>
+                                </td>
+                            </tr>
+
+                        }
+                    </tbody>
+
+                </table>
+            </div>
+
+            <div class="table-responsive">
+                <table class="table table-hover text-center table-bordered">
+                    <thead class="thead-light">
+                        <tr>
+                            <th scope="col">Shiksha Level</th>
+                            <th scope="col">Achieved</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{var skLvls = Enum.GetValues(typeof(Common.Enums.ShikshaLevel)).Cast<Common.Enums.ShikshaLevel>();}
+                        @{var count1 = skLvls.Count(); }
+                        @for (var i = 0; i < count1; i++)
+                        {
+                            <tr class="form-group">
+                                <th scope="row">@Common.Utils.EnumExtensions.GetDisplayName(skLvls.ElementAt(i))</th>
+                                <td>
+                                    <input asp-for="Achieved[i]" />
+                                </td>
+                            </tr>
+
+                        }
+                    </tbody>
+
+                </table>
+            </div>
+            <div class="form-group">
+                @if (Model.DevoteeSpiritualInformation != null)
+                {
+                    <button type="submit" asp-page-handler="Update" asp-route-id="@Id" class="btn btn-primary">Update</button>
+                }
+                else
+                {
+                    <input type="submit" asp-route-id="@Id" class="btn btn-primary" />
+                }
+            </div>
+        </form>
+    </div>
 
 
+    <script>
+        $('.chosen-select').chosen();
+    </script>
+
+    <script type="text/javascript">
+        function ChangeMember(selectObject) {
+            var id = selectObject.value;
+            console.log(id);
+            window.location.href = "/Enrolment/SpiritualInfo?id=" + id;
+
+
+        }
+    </script>
+
+    @section Scripts {
+        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    }

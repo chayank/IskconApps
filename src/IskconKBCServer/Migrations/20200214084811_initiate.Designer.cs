@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace IskconKBCServer.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200213062346_initiate2")]
-    partial class initiate2
+    [Migration("20200214084811_initiate")]
+    partial class initiate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -159,6 +159,50 @@ namespace IskconKBCServer.Migrations
                     b.HasIndex("DevoteeId");
 
                     b.ToTable("DevoteeSkill");
+                });
+
+            modelBuilder.Entity("IskconKBCServer.Models.DevoteeSpiritualInformation", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Attending")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("BvName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CareGiverDevoteeName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CircleName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("DevoteeId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("IsAssociatedToBv")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ResponsibiltyType")
+                        .HasColumnType("int");
+
+                    b.Property<string>("SectorName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ShikshaLevel")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Teaching")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DevoteeId");
+
+                    b.ToTable("DevoteeSpiritualInformation");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -387,6 +431,15 @@ namespace IskconKBCServer.Migrations
                 });
 
             modelBuilder.Entity("IskconKBCServer.Models.DevoteeSkill", b =>
+                {
+                    b.HasOne("IskconKBCServer.Models.Devotee", "Devotee")
+                        .WithMany()
+                        .HasForeignKey("DevoteeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("IskconKBCServer.Models.DevoteeSpiritualInformation", b =>
                 {
                     b.HasOne("IskconKBCServer.Models.Devotee", "Devotee")
                         .WithMany()

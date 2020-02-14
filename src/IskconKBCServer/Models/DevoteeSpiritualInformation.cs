@@ -11,7 +11,9 @@ namespace IskconKBCServer.Models
     public class DevoteeSpiritualInformation
     {
         public int Id { get; set; }
-        public bool IsAssociatedToBv { get; set; }
+        public int DevoteeId { get; set; }
+        public string CareGiverDevoteeName { get; set; }
+        public Decision IsAssociatedToBv { get; set; }
         public  string BvName{ get; set; }
         public string SectorName { get; set; }
         public string CircleName { get; set; }
@@ -19,7 +21,6 @@ namespace IskconKBCServer.Models
         public string Attending { get; set; }
         public string Teaching { get; set; }
         public string ShikshaLevel { get; set; }
-        public string ShikshaLevelReceivedDates { get; set; }
-        public Devotee CaregiverDevotee { get; set; }
+        public Devotee Devotee { get; set; }
     }
 }
